@@ -1,9 +1,9 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from '@/components/home'
-import Cart from '@/components/cart'
-import Me from '@/components/me'
-Vue.use(Router)
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from '@/components/home';
+import Cart from '@/components/cart';
+import Me from '@/components/me';
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -28,4 +28,4 @@ export default new Router({
       component: Me
     }
   ]
-})
+});

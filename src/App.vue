@@ -20,22 +20,22 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { Tabbar, TabItem, Header } from 'mint-ui'
-Vue.component(Tabbar.name, Tabbar)
-Vue.component(TabItem.name, TabItem)
-Vue.component(Header.name, Header)
+import Vue from 'vue';
+import { Tabbar, TabItem, Header } from 'mint-ui';
+Vue.component(Tabbar.name, Tabbar);
+Vue.component(TabItem.name, TabItem);
+Vue.component(Header.name, Header);
 
 export default {
   name: 'App',
   data () {
     return {
       selected: '首页'
-    }
+    };
   },
   methods: {
     test () {
-      alert('11111')
+      alert('11111');
     }
   },
   watch: {
@@ -43,7 +43,7 @@ export default {
       // 这里就可以通过 val 的值变更来确定
     }
   }
-}
+};
 </script>
 
 <style>
@@ -55,7 +55,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.nav{
+.nav {
   z-index: 100px;
 }
 </style>
