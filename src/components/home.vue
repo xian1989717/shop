@@ -55,7 +55,7 @@ export default {
   methods: {
     toDetails (id) {
       this.$router.push({
-        path: 'me',
+        path: '/details',
         query: {
           comId: id
         }

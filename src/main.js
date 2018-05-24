@@ -3,7 +3,8 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-
+import vueMui from 'vue-mui';
+Vue.use(vueMui);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
