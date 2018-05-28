@@ -11,22 +11,34 @@
             <div style='margin:10px 0 10px 0'>{{item.name}}</div>
             <div>{{item.groupPrice}}</div>
             <div>{{item.signPrice}}</div>
+            <div><button @click.stop="buyNow">立即购买</button>
+            </div>
            </div>
          </li>
       </ul>
     </main>
+    <!-- 遮罩 -->
+		<div v-show="buyStatus" class="shade"></div>
+    <!-- 购买操作栏 -->
+		<div v-show="buyStatus" class="buy-style">
+      <cartBar :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
+		</div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Search } from 'mint-ui';
-
+import cartBar from './public/cartBar.vue';
+import { Search,Button } from 'mint-ui';
 Vue.component(Search.name, Search);
+Vue.component(Button.name,Button);
 export default {
   data () {
     return {
       value: '',
+      data:{
+        surplus:955
+      },
       list: [
         {
           id: 1,
@@ -49,7 +61,8 @@ export default {
           groupPrice: 20.0,
           signPrice: 23.0
         }
-      ]
+      ],
+      buyStatus:false,
     };
   },
   methods: {
@@ -60,7 +73,16 @@ export default {
           comId: id
         }
       });
+    },
+    buyNow(){
+      this.buyStatus = true;
+    },
+    close(data){
+      this.buyStatus = data;
     }
+  },
+  components:{
+    cartBar
   }
 };
 </script>

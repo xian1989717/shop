@@ -26,17 +26,7 @@
 		<div v-show="buyStatus" class="shade"></div>
     <!-- 购买操作栏 -->
 		<div v-show="buyStatus" class="buy-style">
-			<i @click="close">X</i>
-			<div class="left">
-				<div>购买数量:</div>
-				<div>剩余{{data.surplus}}</div>
-			</div>
-			<div class="right">
-				<button>-</button>
-				<span>{{num}}</span>
-				<button>+</button>
-			</div>
-			<p>下一步</p>
+      <cartBar :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
 		</div>
     <!-- 底部导航 -->
     <mt-tabbar fixed>
@@ -58,7 +48,9 @@
 
 <script>
 import Vue from "vue";
-import { Tabbar, TabItem, Header } from "mint-ui";
+import cartBar from './public/cartBar.vue';
+import { Tabbar, TabItem, Header,Button } from "mint-ui";
+Vue.component(Button.name, Button);
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabItem.name, TabItem);
 Vue.component(Header.name, Header);
@@ -86,14 +78,16 @@ export default {
   methods: {
     addCart() {
       this.buyStatus = !this.buyStauts;
-      console.log("11111");
     },
-    close() {
-      this.buyStatus = !this.buyStatus;
+    close(data){
+      this.buyStatus = data;
     },
     graphicDetails() {
       this.graphicDetailsStatus = !this.graphicDetailsStatus;
     }
+  },
+  components:{
+    cartBar
   }
 };
 </script>
@@ -123,48 +117,6 @@ main {
     text-align: center;
     width: 50%;
   }
-}
-.buy-style {
-  height: 90px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 100;
-  background: white;
-  i {
-    border: 1px solid black;
-    border-radius: 25px;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    height: 12px;
-    font-size: 6px;
-  }
-  .left {
-    width: 60%;
-    height: 60px;
-    text-align: left;
-  }
-  .right {
-    position: absolute;
-    top: 25px;
-    right: 5px;
-  }
-  p {
-    background: red;
-    line-height: 30px;
-    height: 30px;
-    color: white;
-  }
-}
-.shade {
-  position: fixed;
-  top: 0;
-  z-index: 90px;
-  width: 100%;
-  height: 100%;
-  background: #ccc;
-  opacity: 0.5;
 }
 
 footer {
