@@ -5,6 +5,7 @@ import Cart from '@/components/cart';
 import Me from '@/components/me';
 import Main from '@/components/main';
 import Details from '@/components/details';
+import Classify from '@/components/classify';
 Vue.use(Router);
 
 export default new Router({
@@ -32,7 +33,13 @@ export default new Router({
           path: 'me',
           name: 'Me',
           component: Me
+        },
+        {
+          path: 'classify',
+          name: 'Classify',
+          component: Classify
         }
+
       ]
     },
     {

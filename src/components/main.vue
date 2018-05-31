@@ -9,9 +9,13 @@
       </mt-tab-item>
       <mt-tab-item id="tab2">
         <img slot="icon" src="../assets/cart.png">
-        <router-link to="./cart">购物车</router-link>
+        <router-link to="./classify">分类</router-link>
       </mt-tab-item>
       <mt-tab-item id="tab3">
+        <img slot="icon" src="../assets/cart.png">
+        <router-link to="./cart">购物车</router-link>
+      </mt-tab-item>
+      <mt-tab-item id="tab4">
         <img slot="icon" src="../assets/cart.png">
         <router-link to="./me">我的</router-link>
       </mt-tab-item>
