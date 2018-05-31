@@ -1,16 +1,23 @@
 <template>
   <div class="main">
-    <p>编辑</p>
+    <p v-show="editStatus" @click="changeEditStatus">编辑</p>
+    <p v-show="!editStatus" @click="changeEditStatus">完成</p>
     <ul>
       <li v-for="item in list" :key="item.id">
-        <div v-show="item.stauts" ><img @click="item.stauts =!item.stauts" style="width:20px;height:20px;" src="../assets/yes.png" alt=""></div>
-        <div v-show="!item.stauts" ><img @click="item.stauts = !item.stauts" style="width:20px;height:20px;" src="../assets/no.png" alt=""></div>
-        <img :src="item.img" alt="">
+        <div class="imgWrap" v-show="item.status" ><img @click="item.status =!item.status" style="width:20px;height:20px;" src="../assets/yes.png" alt=""></div>
+        <div class="imgWrap" v-show="!item.status" ><img @click="item.status = !item.status" style="width:20px;height:20px;" src="../assets/no.png" alt=""></div>
+        <img :src="item.img">
         <p>{{item.name}}</p>
-        <div>
+        <div class="priceWrap" v-show="editStatus">
           <span>{{item.groupPrice}}</span>
           <span>X{{item.num}}</span>
         </div>
+        <div class="fl" style="margin-top:60px;" v-show="!editStatus">
+				  <button @click="subtract(item.id)">-</button>
+          <span>{{item.num}}</span>
+				  <button @click="add(item.id)">+</button>
+        </div>
+        <div class="fr delete" v-show="!editStatus" @click="deleteCom(item.id)">删除</div>
       </li>
     </ul>
     <div class="footer">
@@ -22,6 +29,7 @@
 </template>
 
 <script>
+import { MessageBox } from 'mint-ui';
 export default {
   data () {
     return {
@@ -33,7 +41,7 @@ export default {
           groupPrice: 20.0,
           signPrice: 23.0,
           num:5,
-          stauts:true,
+          status:true,
         },
         {
           id: 2,
@@ -42,7 +50,7 @@ export default {
           groupPrice: 20.0,
           signPrice: 23.0,
           num:5,
-          stauts:true,
+          status:true,
         },
         {
           id: 3,
@@ -51,48 +59,74 @@ export default {
           groupPrice: 20.0,
           signPrice: 23.0,
           num:5,
-          stauts:true,
+          status:true,
         }
       ],
+      editStatus:true
     };
   },
   methods:{
+    /**
+     * 全选方法
+     */
     allSelect(){
       this.list.forEach((val,index)=>{
         console.log(val);
-        val.stauts = !val.stauts;
-        // console.log(val+'...'+index);
+        val.status = !val.status;
       })
+    },
+    /**
+     * 删除方法
+     * @param id 要删除的元素的Id
+     */
+    deleteCom(id){
+      MessageBox.confirm('确定执行此操作?').then(res => {
+        if(res){
+          this.list.forEach((v,i)=>{
+            if(v.id === id){
+              this.list.splice(i,1);
+            }
+          });
+        }
+      });
+    },
+    /**
+     * 切换编辑状态/完成状态
+     */
+    changeEditStatus(){
+      this.editStatus = !this.editStatus;
+    },
+
+    add(id){
+      for(let i = 0;i<this.list.length;i++){
+        if(this.list[i].id === id){
+          this.list[i].num +=1;
+        }
+      }
+    },
+    subtract(id){
+      for(let i = 0;i<this.list.length;i++){
+        if(this.list[i].id === id){
+          if(this.list[i].num>1){
+            this.list[i].num = this.list[i].num - 1;
+          }
+        }
+      }
     }
   },
   computed: {  
     isSelectAll:function(){  
-      console.log(this.list);
-      //如果每一条数据的select都为true，返回true，否则返回false; 
-      return this.list.every(function (val) { return val.stauts});  
+      return this.list.every(function (val) { return val.status});  
     },  
     getTotal:function(){  
-        //获取goodsList中select为true的数据。  
-        var _proList=this.list.filter(function (val) { return val.stauts}),totalPrice=0;  
+        var _proList=this.list.filter(function (val) { return val.status}),totalPrice=0;  
         for(var i=0,len=_proList.length;i<len;i++){  
-            //总价累加  
             totalPrice+=_proList[i].num*_proList[i].groupPrice;  
-        }  
-        //选择产品的件数就是_proList.length，总价就是totalPrice  
+        }
         return {totalNum:_proList.length,totalPrice:totalPrice}  
     },  
   },  
   watch:{
-    // totalPrice(curVal,oldVal){
-    //   console.log(curVal);
-    // }
-    'list':{
-      handler: function (val, oldVal) {
-          console.log(val);
-      },
-      deep: true
-    },
-
   }
 };
 </script>
@@ -107,17 +141,23 @@ export default {
     overflow: hidden;
     img {
       float: left;
+      margin-right: 5px;
     }
     position: relative;
     p {
       text-align: left;
       margin-left: 5px;
     }
-    div {
+    .imgWrap {
+      margin-top: 10px;
+    }
+    div.fr {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .priceWrap {
       margin-top: 60px;
-      span {
-        margin-left: 5px;
-      }
       span:nth-child(2) {
         float: right;
         margin-right: 10px;
