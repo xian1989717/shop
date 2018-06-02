@@ -6,6 +6,7 @@ import Me from '@/components/me';
 import Main from '@/components/main';
 import Details from '@/components/details';
 import Classify from '@/components/classify';
+import CommodityList from '@/components/commodityList';
 Vue.use(Router);
 
 export default new Router({
@@ -38,8 +39,12 @@ export default new Router({
           path: 'classify',
           name: 'Classify',
           component: Classify
+        },
+        {
+          path: 'commodityList',
+          name: 'CommodityList',
+          component: CommodityList
         }
-
       ]
     },
     {
