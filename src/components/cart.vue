@@ -96,7 +96,6 @@ export default {
     changeEditStatus(){
       this.editStatus = !this.editStatus;
     },
-
     add(id){
       for(let i = 0;i<this.list.length;i++){
         if(this.list[i].id === id){
