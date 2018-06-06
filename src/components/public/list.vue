@@ -21,9 +21,11 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      list: this.comList
+    };
   },
-  prop: [],
+  props: ["comList"],
   methods: {
     toDetails(id) {
       this.$router.push({
@@ -34,7 +36,7 @@ export default {
       });
     },
     buyNow() {
-      this.buyStatus = true;
+      this.$emit("buy-now", true);
     }
   }
 };

@@ -7,6 +7,7 @@ import Main from '@/components/main';
 import Details from '@/components/details';
 import Classify from '@/components/classify';
 import CommodityList from '@/components/commodityList';
+import OrderList from '@/components/OrderList';
 Vue.use(Router);
 
 export default new Router({
@@ -51,6 +52,11 @@ export default new Router({
       path: '/details',
       name: 'Details',
       component: Details
+    },
+    {
+      path: '/orderList',
+      name: 'OrderList',
+      component: OrderList
     }
   ]
 });
