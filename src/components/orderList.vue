@@ -6,7 +6,7 @@
       </router-link>
     </mt-header>
     <div class="nav">
-      <span v-for="item in headerList" :key="item.id" @click="changeList(item.id)">{{item.name}}</span>
+      <span :class="{'active':index === dom}" v-for="(item,index) in headerList" :key="item.id" @click="changeList(item.id,index)">{{item.name}}</span>
     </div>
     <div>
       <ul>
@@ -57,11 +57,14 @@ export default {
           id: 4,
           name: "已完成"
         }
-      ]
+      ],
+      dom: 0
     };
   },
   methods: {
-    changeList(id) {}
+    changeList(id, index) {
+      this.dom = index;
+    }
   }
 };
 </script>
@@ -85,6 +88,9 @@ export default {
   div {
     margin-left: 100px;
   }
+}
+.active {
+  border-bottom: 2px solid red;
 }
 </style>
 
