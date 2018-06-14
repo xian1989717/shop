@@ -13,15 +13,15 @@
             <img :src='item.img'>
           </div>
           <div class='list_div_right'>
-            <div style='margin:10px 0 10px 0'>{{item.name}}</div>
-            <div>{{item.groupPrice|format}}</div>
-            <div>{{item.signPrice|format}}</div>
-          </div>
-          <div class="buttonWrap">
-            <div @click.stop="buyNow">立即购买</div>
+            <div>{{item.name}}</div>
+            <p>
+              <span>{{item.groupPrice|format}}</span>
+              <span class="fr" @click.stop="buyNow">立即购买</span>
+            </p>
           </div>
         </li>
       </ul>
+      <div style="height:55px;"></div>
     </main>
     <!-- 遮罩 -->
     <div v-show="buyStatus" class="shade"></div>
@@ -104,19 +104,19 @@ export default {
 <style lang='less' scoped>
 .myHeight {
   height: auto;
+  margin: 5px 10px;
 }
 .myUl {
   text-align: left;
+  margin: 0 10px;
   .first_li {
     overflow: hidden;
     position: relative;
-    .list_div_left {
-      display: inline-block;
-    }
     .list_div_right {
-      display: inline-block;
+      margin: 0 0 0 125px;
       > div {
         text-align: left;
+        margin: 10px 0 50px 0;
       }
     }
     .buttonWrap {
