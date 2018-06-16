@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background:#CAE1FF">
     <mt-swipe :auto="4000" style="height:200px;">
       <mt-swipe-item><img src="../assets/swipe_01.jpg" alt="" style="width:100%;"></mt-swipe-item>
       <mt-swipe-item><img src="../assets/swipe_02.jpg" alt="" style="width:100%;"></mt-swipe-item>
@@ -112,12 +112,19 @@ export default {
   .first_li {
     overflow: hidden;
     position: relative;
+    background: white;
+    margin-bottom: 5px;
+    padding-right: 5px;
+    border: 1px solid #ccc;
     .list_div_right {
       margin: 0 0 0 125px;
       > div {
         text-align: left;
         margin: 10px 0 50px 0;
       }
+    }
+    .list_div_left {
+      height: 106px;
     }
     .buttonWrap {
       position: absolute;
