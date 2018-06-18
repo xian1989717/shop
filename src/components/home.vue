@@ -16,7 +16,7 @@
             <div>{{item.name}}</div>
             <p>
               <span>{{item.groupPrice|format}}</span>
-              <span class="fr" @click.stop="buyNow">立即购买</span>
+              <span class="fr" @click.stop="buyNow(item.id)">立即购买</span>
             </p>
           </div>
         </li>
@@ -27,7 +27,7 @@
     <div v-show="buyStatus" class="shade"></div>
     <!-- 购买操作栏 -->
     <div v-show="buyStatus" class="buy-style">
-      <cartBar :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
+      <cartBar :com-name="listName" :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
     </div>
   </div>
 </template>
@@ -71,7 +71,8 @@ export default {
           signPrice: 23.0
         }
       ],
-      buyStatus: false
+      buyStatus: false,
+      listName: ""
     };
   },
   methods: {
@@ -83,7 +84,8 @@ export default {
         }
       });
     },
-    buyNow() {
+    buyNow(id) {
+      this.listName = this.list[id].name;
       this.buyStatus = true;
     },
     close(data) {
@@ -91,7 +93,7 @@ export default {
     }
   },
   filters: {
-    format: function(value) {
+    format(value) {
       return value + ".00";
     }
   },

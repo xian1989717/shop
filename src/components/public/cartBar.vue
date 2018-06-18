@@ -1,18 +1,19 @@
 <template>
   <div class="main">
-   
     <div class="title">
       <img src="" alt="">
       <p>
-        <span>鹿听冬瓜荷叶茶 60克</span>
-        <i :style="{backgroundImage:'url('+require('../../assets/close.png')+')'}" class="close" @click="close"></i>
+        <span>{{name}}</span>
+        <span class="fr" @click="close">
+          <img src="../../assets/close.png" alt="">
+        </span>
       </p>
       <p>￥24.00</p>
     </div>
     <div class="content">
       <div class="left">
-        <div>购买数量:</div>
-        <div>剩余{{surplus}}</div>
+        <div><b>购买数量:</b></div>
+        <div>剩余:{{surplus}}</div>
       </div>
       <div class="right">
         <button>-</button>
@@ -20,7 +21,6 @@
         <button>+</button>
       </div>
     </div>
-   
     <p>下一步</p>
   </div>
 </template>
@@ -30,10 +30,16 @@ export default {
   data() {
     return {
       num: 1,
-      surplus: this.comSurplus
+      surplus: this.comSurplus,
+      name: ""
     };
   },
-  props: ["comSurplus"],
+  props: ["comSurplus", "comName"],
+  watch: {
+    comName(newValue, oldValue) {
+      this.name = newValue;
+    }
+  },
   methods: {
     close() {
       this.$emit("buy-Stauts", false);
@@ -43,37 +49,44 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.close {
-  display:inline-block;
-  width: 15px;
-  height: 15px;
-}
-
 .main {
   padding: 5px 5px 0 5px;
   height: 195px;
   .title {
     border-bottom: 1px solid #ccc;
+    span {
+      line-height: 21px;
+      font-size: 12px;
+    }
+    span.fr {
+      img {
+        margin-top: 2px;
+        width: 16px;
+      }
+    }
   }
   .content {
     position: relative;
     .left {
       width: 60%;
-      height: 60px;
+      height: 40px;
       text-align: left;
+      div:nth-child(2) {
+        font-size: 12px;
+      }
     }
     .right {
       position: absolute;
-      top: 25px;
+      top: 12px;
       right: 5px;
     }
   }
-
   > p {
     background: red;
     line-height: 30px;
     height: 30px;
     color: white;
+    text-align: center;
   }
 }
 </style>
