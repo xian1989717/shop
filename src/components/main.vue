@@ -49,12 +49,13 @@ export default {
   width: 100%;
   position: fixed;
   bottom: 0px;
+  background: white;
   > a {
     display: inline-block;
     width: 24%;
     text-align: center;
     color: black;
-    line-height:30px;
+    line-height: 30px;
   }
 }
 .router-link-active {

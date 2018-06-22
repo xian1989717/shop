@@ -15,8 +15,8 @@
           <div class='list_div_right'>
             <div>{{item.name}}</div>
             <p>
-              <span>{{item.groupPrice|format}}</span>
-              <span class="fr" @click.stop="buyNow(item.id)">立即购买</span>
+              <span class="price">￥{{item.groupPrice|format}}</span>
+              <img class="fr" @click.stop="buyNow(item.id)" src="../assets/cart_title.png" alt="">
             </p>
           </div>
         </li>
@@ -50,6 +50,13 @@ export default {
       },
       list: [
         {
+          id: 0,
+          img: require("../assets/01.png"),
+          name: "鹿听茶",
+          groupPrice: 20.0,
+          signPrice: 23.0
+        },
+        {
           id: 1,
           img: require("../assets/01.png"),
           name: "鹿听茶",
@@ -58,13 +65,6 @@ export default {
         },
         {
           id: 2,
-          img: require("../assets/01.png"),
-          name: "鹿听茶",
-          groupPrice: 20.0,
-          signPrice: 23.0
-        },
-        {
-          id: 3,
           img: require("../assets/01.png"),
           name: "鹿听茶",
           groupPrice: 20.0,
@@ -122,7 +122,16 @@ export default {
       margin: 0 0 0 125px;
       > div {
         text-align: left;
-        margin: 10px 0 50px 0;
+        margin: 10px 0 50px 5px;
+      }
+      > p {
+        .price {
+          margin-left: 5px;
+          color: red;
+        }
+        img{
+          width:20px;
+        }
       }
     }
     .list_div_left {

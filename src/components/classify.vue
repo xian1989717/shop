@@ -2,7 +2,7 @@
   <div class='main'>
     <div class='fl'>
       <ul>
-        <li @click="changeDetailsList(item.id)" v-for='item in list' :key='item.id'>
+        <li :class="{change_bac:item.id === myId}" @click="changeDetailsList(item.id)" v-for='item in list' :key='item.id'>
           <span>{{item.name}}</span>
         </li>
       </ul>
@@ -219,7 +219,8 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      myId: null
     };
   },
   created() {
@@ -227,15 +228,16 @@ export default {
   },
   methods: {
     changeDetailsList(id) {
-      this.showList = this.detailsList.filter(function(val) {
+      this.myId = id;
+      this.showList = this.detailsList.filter(val => {
         if (id === val.id) {
           return val;
         }
       });
     },
-    toDetails(id){
-       this.$router.push({
-        path: '/commodityList',
+    toDetails(id) {
+      this.$router.push({
+        path: "/commodityList",
         query: {
           comId: id
         }
@@ -251,6 +253,10 @@ export default {
   .fl {
     min-width: 76px;
     ul {
+      padding-left: 5px;
+      .change_bac {
+        background: #ccc;
+      }
       span {
         line-height: 46px;
       }
