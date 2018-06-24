@@ -4,24 +4,24 @@
     <p v-show="!editStatus" @click="changeEditStatus">完成</p>
     <ul>
       <li v-for="item in list" :key="item.id">
-        <div class="imgWrap" v-show="item.status" ><img @click="item.status =!item.status" style="width:20px;height:20px;" src="../assets/yes.png" alt=""></div>
-        <div class="imgWrap" v-show="!item.status" ><img @click="item.status = !item.status" style="width:20px;height:20px;" src="../assets/no.png" alt=""></div>
+        <img v-show="item.status" @click="item.status =!item.status" class="change" src="../assets/yes.png" alt="">
+        <img v-show="!item.status" @click="item.status = !item.status" class="change" src="../assets/no.png" alt="">
         <img :src="item.img">
         <p>{{item.name}}</p>
         <div class="priceWrap" v-show="editStatus">
-          <span>{{item.groupPrice}}</span>
+          <span>￥{{item.groupPrice | formatMoney}}</span>
           <span>X{{item.num}}</span>
         </div>
         <div class="fl" style="margin-top:60px;" v-show="!editStatus">
-				  <button @click="subtract(item.id)">-</button>
+          <button @click="subtract(item.id)">-</button>
           <span>{{item.num}}</span>
-				  <button @click="add(item.id)">+</button>
+          <button @click="add(item.id)">+</button>
         </div>
         <div class="fr delete" v-show="!editStatus" @click="deleteCom(item.id)">删除</div>
       </li>
     </ul>
     <div class="footer">
-      <input type="checkbox" :checked="isSelectAll" @click="allSelect"/>
+      <input type="checkbox" :checked="isSelectAll" @click="allSelect" />
       <span>全选</span>
       <span>合计:{{getTotal.totalPrice}}</span>
     </div>
@@ -29,62 +29,62 @@
 </template>
 
 <script>
-import { MessageBox } from 'mint-ui';
+import { MessageBox } from "mint-ui";
 export default {
-  data () {
+  data() {
     return {
       list: [
         {
           id: 1,
-          img: require('../assets/01.png'),
-          name: '鹿听茶',
+          img: require("../assets/01.png"),
+          name: "鹿听茶",
           groupPrice: 20.0,
           signPrice: 23.0,
-          num:5,
-          status:true,
+          num: 5,
+          status: true
         },
         {
           id: 2,
-          img: require('../assets/01.png'),
-          name: '鹿听茶',
+          img: require("../assets/01.png"),
+          name: "鹿听茶",
           groupPrice: 20.0,
           signPrice: 23.0,
-          num:5,
-          status:true,
+          num: 5,
+          status: true
         },
         {
           id: 3,
-          img: require('../assets/01.png'),
-          name: '鹿听茶',
+          img: require("../assets/01.png"),
+          name: "鹿听茶",
           groupPrice: 20.0,
           signPrice: 23.0,
-          num:5,
-          status:true,
+          num: 5,
+          status: true
         }
       ],
-      editStatus:true
+      editStatus: true
     };
   },
-  methods:{
+  methods: {
     /**
      * 全选方法
      */
-    allSelect(){
-      this.list.forEach((val,index)=>{
+    allSelect() {
+      this.list.forEach((val, index) => {
         console.log(val);
         val.status = !val.status;
-      })
+      });
     },
     /**
      * 删除方法
      * @param id 要删除的元素的Id
      */
-    deleteCom(id){
-      MessageBox.confirm('确定执行此操作?').then(res => {
-        if(res){
-          this.list.forEach((v,i)=>{
-            if(v.id === id){
-              this.list.splice(i,1);
+    deleteCom(id) {
+      MessageBox.confirm("确定执行此操作?").then(res => {
+        if (res) {
+          this.list.forEach((v, i) => {
+            if (v.id === id) {
+              this.list.splice(i, 1);
             }
           });
         }
@@ -93,40 +93,44 @@ export default {
     /**
      * 切换编辑状态/完成状态
      */
-    changeEditStatus(){
+    changeEditStatus() {
       this.editStatus = !this.editStatus;
     },
-    add(id){
-      for(let i = 0;i<this.list.length;i++){
-        if(this.list[i].id === id){
-          this.list[i].num +=1;
+    add(id) {
+      for (let i = 0; i < this.list.length; i++) {
+        if (this.list[i].id === id) {
+          this.list[i].num += 1;
         }
       }
     },
-    subtract(id){
-      for(let i = 0;i<this.list.length;i++){
-        if(this.list[i].id === id){
-          if(this.list[i].num>1){
+    subtract(id) {
+      for (let i = 0; i < this.list.length; i++) {
+        if (this.list[i].id === id) {
+          if (this.list[i].num > 1) {
             this.list[i].num = this.list[i].num - 1;
           }
         }
       }
     }
   },
-  computed: {  
-    isSelectAll:function(){  
-      return this.list.every(function (val) { return val.status});  
-    },  
-    getTotal:function(){  
-        var _proList=this.list.filter(function (val) { return val.status}),totalPrice=0;  
-        for(var i=0,len=_proList.length;i<len;i++){  
-            totalPrice+=_proList[i].num*_proList[i].groupPrice;  
-        }
-        return {totalNum:_proList.length,totalPrice:totalPrice}  
-    },  
-  },  
-  watch:{
-  }
+  computed: {
+    isSelectAll: function() {
+      return this.list.every(function(val) {
+        return val.status;
+      });
+    },
+    getTotal: function() {
+      var _proList = this.list.filter(function(val) {
+          return val.status;
+        }),
+        totalPrice = 0;
+      for (var i = 0, len = _proList.length; i < len; i++) {
+        totalPrice += _proList[i].num * _proList[i].groupPrice;
+      }
+      return { totalNum: _proList.length, totalPrice: totalPrice };
+    }
+  },
+  watch: {}
 };
 </script>
 
@@ -138,6 +142,14 @@ export default {
   }
   li {
     overflow: hidden;
+    margin-top: 10px;
+    padding: 5px 0;
+    background: #ccc;
+    .change {
+      width: 20px;
+      height: 20px;
+      margin-top: 50px;
+    }
     img {
       float: left;
       margin-right: 5px;
@@ -146,9 +158,6 @@ export default {
     p {
       text-align: left;
       margin-left: 5px;
-    }
-    .imgWrap {
-      margin-top: 10px;
     }
     div.fr {
       position: absolute;

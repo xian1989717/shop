@@ -15,7 +15,7 @@
           <div class='list_div_right'>
             <div>{{item.name}}</div>
             <p>
-              <span class="price">￥{{item.groupPrice|format}}</span>
+              <span class="price">￥{{item.groupPrice|formatMoney}}</span>
               <img class="fr" @click.stop="buyNow(item.id)" src="../assets/cart_title.png" alt="">
             </p>
           </div>
@@ -90,11 +90,6 @@ export default {
     },
     close(data) {
       this.buyStatus = data;
-    }
-  },
-  filters: {
-    format(value) {
-      return value + ".00";
     }
   },
   components: {
