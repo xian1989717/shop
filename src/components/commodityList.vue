@@ -4,8 +4,8 @@
     <!-- 遮罩 -->
     <div v-show="buyStatus" class="shade"></div>
     <!-- 购买操作栏 -->
-    <div v-show="buyStatus" class="buy-style" style="height:120px;">
-      <cartBar :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
+    <div v-show="buyStatus" class="buy-style">
+      <cartBar :com-name="listName" :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
     </div>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
         surplus: 996
       },
       buyStatus: false,
-      
+      listName: ""
     };
   },
   components: {
@@ -54,6 +54,7 @@ export default {
   methods: {
     show(data) {
       this.buyStatus = data;
+      this.listName = this.list[data.id].name;
     },
     close(data) {
       this.buyStatus = data;
@@ -68,12 +69,45 @@ export default {
 }
 .shade {
   position: fixed;
-  bottom:30px;
+  bottom: 30px;
   z-index: 90;
   width: 100%;
   height: 100%;
   background: #ccc;
   opacity: 0.5;
+}
+.buy-style {
+  height: 140px;
+  position: fixed;
+  bottom: 30px;
+  width: 100%;
+  z-index: 100;
+  background: white;
+  i {
+    border: 1px solid black;
+    border-radius: 25px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    height: 12px;
+    font-size: 6px;
+  }
+  .left {
+    width: 60%;
+    height: 60px;
+    text-align: left;
+  }
+  .right {
+    position: absolute;
+    top: 25px;
+    right: 5px;
+  }
+  p {
+    background: red;
+    line-height: 30px;
+    height: 30px;
+    color: white;
+  }
 }
 </style>
 

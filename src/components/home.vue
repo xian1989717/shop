@@ -8,20 +8,6 @@
     <mt-search class='myHeight' v-model='value' cancel-text='取消' placeholder='搜索'></mt-search>
     <main>
       <myList com-from="home" :com-list="list" @buy-now="show"></myList>
-      <!-- <ul class='myUl'>
-        <li class='first_li' v-for='item in list' :key=item.id @click='toDetails(item.id)'>
-          <div class='list_div_left fl'>
-            <img :src='item.img'>
-          </div>
-          <div class='list_div_right'>
-            <div>{{item.name}}</div>
-            <p>
-              <span class="price">￥{{item.groupPrice|formatMoney}}</span>
-              <img class="fr" @click.stop="buyNow(item.id)" src="../assets/cart_title.png">
-            </p>
-          </div>
-        </li>
-      </ul> -->
       <div style="height:55px;"></div>
     </main>
     <!-- 遮罩 -->
@@ -86,12 +72,13 @@ export default {
         }
       });
     },
-    buyNow(id) {
-      this.listName = this.list[id].name;
-      this.buyStatus = true;
-    },
+    // buyNow(id) {
+    //   this.listName = this.list[id].name;
+    //   this.buyStatus = true;
+    // },
     show(data) {
-      this.buyStatus = data;
+      this.buyStatus = data.status;
+      this.listName = this.list[data.id].name;
     },
     close(data) {
       this.buyStatus = data;

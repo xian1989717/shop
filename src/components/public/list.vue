@@ -36,8 +36,8 @@ export default {
         }
       });
     },
-    buyNow() {
-      this.$emit("buy-now", true);
+    buyNow(id) {
+      this.$emit("buy-now", { status: true, id: id });
     }
   }
 };
