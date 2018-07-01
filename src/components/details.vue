@@ -16,12 +16,12 @@
     <!-- 主要内容 -->
     <main>
       <p>{{data.name}}</p>
-      <p class="color">{{data.price}}</p>
-      <p class="transverse-line">{{data.oldPrice}}</p>
+      <p class="color">￥{{data.price |formatMoney}}</p>
+      <p class="transverse-line">￥{{data.oldPrice |formatMoney}}</p>
       <div class="transverse-line">
-        <span style="float:left;">运费：{{data.transportation}}</span>
-        <span>剩余：{{data.inventory}}</span>
-        <span style="float:right;">销量：{{data.sales}}</span>
+        <span class="fl">运费：{{data.transportation}}</span>
+        <span class="ml5">剩余：{{data.inventory}}</span>
+        <span class="fr">销量：{{data.sales}}</span>
       </div>
       <div class="">
         <span class="my-span" @click="graphicDetails(1)">图文详情</span>
@@ -34,12 +34,12 @@
     <div v-show="buyStatus" class="shade"></div>
     <!-- 购买操作栏 -->
     <div v-show="buyStatus" class="buy-style">
-      <cartBar :com-name="data.name" :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
+      <cartBar :com-name="data" :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
     </div>
     <!-- 底部导航 -->
     <footer>
       <div class="service">客服</div>
-      <div class="shopping">购物车</div>
+      <div class="shopping" @click="toCart">购物车</div>
       <div class="add-cart" @click="addCart">加入购物车</div>
     </footer>
   </div>
@@ -80,6 +80,11 @@ export default {
     this.from = this.$route.query.from;
   },
   methods: {
+    toCart() {
+      this.$router.push({
+        path: "/cart"
+      });
+    },
     addCart() {
       this.buyStatus = !this.buyStauts;
     },

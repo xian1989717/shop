@@ -8,7 +8,7 @@
           <img src="../../assets/close.png" alt="">
         </span>
       </p>
-      <p>￥24.00</p>
+      <p>￥{{price|formatMoney}}</p>
     </div>
     <div class="content">
       <div class="left">
@@ -33,13 +33,14 @@ export default {
     return {
       num: 1,
       surplus: this.comSurplus,
-      name: this.comName
+      name: this.comName.name,
+      price: this.comName.price
     };
   },
   props: ["comSurplus", "comName"],
   watch: {
     comName(newValue, oldValue) {
-      this.name = newValue;
+      this.name = newValue.name;
     }
   },
   methods: {
