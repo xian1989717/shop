@@ -34,7 +34,7 @@
     <div v-show="buyStatus" class="shade"></div>
     <!-- 购买操作栏 -->
     <div v-show="buyStatus" class="buy-style">
-      <cartBar :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
+      <cartBar :com-name="data.name" :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
     </div>
     <!-- 底部导航 -->
     <footer>
@@ -159,7 +159,7 @@ footer {
   }
 }
 .buy-style {
-  height: 110px;
+  height: 131px;
   position: fixed;
   bottom: 30px;
   width: 100%;

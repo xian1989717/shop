@@ -33,7 +33,7 @@ export default {
     return {
       num: 1,
       surplus: this.comSurplus,
-      name: ""
+      name: this.comName
     };
   },
   props: ["comSurplus", "comName"],
