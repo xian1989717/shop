@@ -9,7 +9,7 @@
     </div>
     <div class='right'>
       <div v-for='item in showList' :key='item.id' @click="toDetails">
-        <p>{{item.headline}}</p>
+        <p class="title">{{item.headline}}</p>
         <div class="details" v-for="details in item.details" :key="details.name">
           <img :src="details.img">
           <p>{{details.name}}</p>
@@ -264,9 +264,12 @@ export default {
   }
   .right {
     margin-left: 76px;
+    .title {
+      margin-left: 10px;
+    }
     .details {
       font-size: 12px;
-      width: 25%;
+      width: 33%;
       display: inline-block;
       text-align: center;
       img {

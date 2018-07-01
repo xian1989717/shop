@@ -6,12 +6,11 @@
           <img :src='item.img'>
         </div>
         <div class='list_div_right'>
-          <div style='margin:10px 0 10px 0'>{{item.name}}</div>
-          <div>{{item.groupPrice}}</div>
-          <div>{{item.signPrice}}</div>
-        </div>
-        <div class="buttonWrap">
-          <button @click.stop="buyNow">立即购买</button>
+          <div>{{item.name}}</div>
+          <p>
+            <span class="price">￥{{item.groupPrice|formatMoney}}</span>
+            <img class="fr" @click.stop="buyNow(item.id)" src="../../assets/cart_title.png">
+          </p>
         </div>
       </li>
     </ul>
@@ -45,17 +44,32 @@ export default {
 <style lang="less" scoped>
 .myUl {
   text-align: left;
+  margin: 0 10px;
   .first_li {
     overflow: hidden;
     position: relative;
-    .list_div_left {
-      display: inline-block;
-    }
+    background: white;
+    margin-bottom: 5px;
+    padding-right: 5px;
+    border: 1px solid #ccc;
     .list_div_right {
-      display: inline-block;
+      margin: 0 0 0 125px;
       > div {
         text-align: left;
+        margin: 10px 0 50px 5px;
       }
+      > p {
+        .price {
+          margin-left: 5px;
+          color: red;
+        }
+        img {
+          width: 20px;
+        }
+      }
+    }
+    .list_div_left {
+      height: 106px;
     }
     .buttonWrap {
       position: absolute;

@@ -1,11 +1,10 @@
 <template>
-  <div>
-    商品列表
+  <div class="main">
     <myList :com-list="list" @buy-now="show"></myList>
     <!-- 遮罩 -->
     <div v-show="buyStatus" class="shade"></div>
     <!-- 购买操作栏 -->
-    <div v-show="buyStatus" class="buy-style">
+    <div v-show="buyStatus" class="buy-style" style="height:120px;">
       <cartBar :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
     </div>
   </div>
@@ -63,5 +62,17 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.main {
+  padding-top: 10px;
+}
+.shade {
+  position: fixed;
+  bottom:30px;
+  z-index: 90;
+  width: 100%;
+  height: 100%;
+  background: #ccc;
+  opacity: 0.5;
+}
 </style>
 

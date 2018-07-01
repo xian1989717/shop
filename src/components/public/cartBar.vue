@@ -12,7 +12,9 @@
     </div>
     <div class="content">
       <div class="left">
-        <div><b>购买数量:</b></div>
+        <div>
+          <b>购买数量:</b>
+        </div>
         <div>剩余:{{surplus}}</div>
       </div>
       <div class="right">
@@ -50,10 +52,10 @@ export default {
 
 <style lang="less" scoped>
 .main {
-  padding: 5px 5px 0 5px;
   height: 195px;
   .title {
     border-bottom: 1px solid #ccc;
+    padding: 0 5px;
     span {
       line-height: 21px;
       font-size: 12px;
@@ -67,6 +69,7 @@ export default {
   }
   .content {
     position: relative;
+    padding: 0 5px;
     .left {
       width: 60%;
       height: 40px;

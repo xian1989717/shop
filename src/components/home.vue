@@ -16,7 +16,7 @@
             <div>{{item.name}}</div>
             <p>
               <span class="price">￥{{item.groupPrice|formatMoney}}</span>
-              <img class="fr" @click.stop="buyNow(item.id)" src="../assets/cart_title.png" alt="">
+              <img class="fr" @click.stop="buyNow(item.id)" src="../assets/cart_title.png">
             </p>
           </div>
         </li>
@@ -99,6 +99,15 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.shade {
+  position: fixed;
+  bottom:30px;
+  z-index: 90;
+  width: 100%;
+  height: 100%;
+  background: #ccc;
+  opacity: 0.5;
+}
 .myHeight {
   height: auto;
   margin: 5px 10px;
@@ -124,8 +133,8 @@ export default {
           margin-left: 5px;
           color: red;
         }
-        img{
-          width:20px;
+        img {
+          width: 20px;
         }
       }
     }

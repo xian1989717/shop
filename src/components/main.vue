@@ -50,6 +50,7 @@ export default {
   position: fixed;
   bottom: 0px;
   background: white;
+  z-index:100;
   > a {
     display: inline-block;
     width: 24%;
