@@ -7,7 +7,8 @@
     </mt-swipe>
     <mt-search class='myHeight' v-model='value' cancel-text='取消' placeholder='搜索'></mt-search>
     <main>
-      <ul class='myUl'>
+      <myList com-from="home" :com-list="list" @buy-now="show"></myList>
+      <!-- <ul class='myUl'>
         <li class='first_li' v-for='item in list' :key=item.id @click='toDetails(item.id)'>
           <div class='list_div_left fl'>
             <img :src='item.img'>
@@ -20,7 +21,7 @@
             </p>
           </div>
         </li>
-      </ul>
+      </ul> -->
       <div style="height:55px;"></div>
     </main>
     <!-- 遮罩 -->
@@ -34,6 +35,7 @@
 
 <script>
 import Vue from "vue";
+import myList from "./public/list.vue";
 import { Swipe, SwipeItem, Search, Button } from "mint-ui";
 Vue.component(Search.name, Search);
 Vue.component(Button.name, Button);
@@ -88,12 +90,16 @@ export default {
       this.listName = this.list[id].name;
       this.buyStatus = true;
     },
+    show(data) {
+      this.buyStatus = data;
+    },
     close(data) {
       this.buyStatus = data;
     }
   },
   components: {
-    cartBar
+    cartBar,
+    myList
   }
 };
 </script>
@@ -101,7 +107,7 @@ export default {
 <style lang='less' scoped>
 .shade {
   position: fixed;
-  bottom:30px;
+  bottom: 30px;
   z-index: 90;
   width: 100%;
   height: 100%;

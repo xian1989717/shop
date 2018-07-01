@@ -21,15 +21,17 @@
 export default {
   data() {
     return {
-      list: this.comList
+      list: this.comList,
+      from: this.comFrom
     };
   },
-  props: ["comList"],
+  props: ["comList", "comFrom"],
   methods: {
     toDetails(id) {
       this.$router.push({
         path: "/details",
         query: {
+          from: this.from,
           comId: id
         }
       });

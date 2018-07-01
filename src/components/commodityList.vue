@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <myList :com-list="list" @buy-now="show"></myList>
+    <myList com-from="commodityList" :com-list="list" @buy-now="show"></myList>
     <!-- 遮罩 -->
     <div v-show="buyStatus" class="shade"></div>
     <!-- 购买操作栏 -->
@@ -43,7 +43,8 @@ export default {
       data: {
         surplus: 996
       },
-      buyStatus: false
+      buyStatus: false,
+      
     };
   },
   components: {

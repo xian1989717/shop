@@ -52,7 +52,7 @@ export default {
 
 <style lang="less" scoped>
 .main {
-  height: 195px;
+  height: 110px;
   .title {
     border-bottom: 1px solid #ccc;
     padding: 0 5px;

@@ -1,7 +1,10 @@
 <template>
   <div>
     <mt-header class="nav" fixed title="商品详情">
-      <router-link to="/" slot="left">
+      <router-link v-show="from ==='commodityList'" to="commodityList" slot="left">
+        <mt-button icon="back">返回</mt-button>
+      </router-link>
+      <router-link v-show="from ==='home'" to="/" slot="left">
         <mt-button icon="back">返回</mt-button>
       </router-link>
     </mt-header>
@@ -65,12 +68,16 @@ export default {
       },
       num: 1,
       buyStatus: false,
-      graphicDetailsStatus: true
+      graphicDetailsStatus: true,
+      from: ""
     };
   },
   events: {
     confirm() {},
     cancel() {}
+  },
+  created() {
+    this.from = this.$route.query.from;
   },
   methods: {
     addCart() {
@@ -94,6 +101,15 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.shade {
+  position: fixed;
+  bottom: 30px;
+  z-index: 90;
+  width: 100%;
+  height: 100%;
+  background: #ccc;
+  opacity: 0.5;
+}
 .slider {
   height: 150px;
   border: 1px solid #ccc;
@@ -128,7 +144,7 @@ footer {
   div {
     display: inline-block;
     text-align: center;
-    line-height: 32px;
+    line-height: 30px;
   }
   .service {
     width: 20%;
@@ -137,7 +153,7 @@ footer {
     width: 30%;
   }
   .add-cart {
-    width: 47%;
+    width: 47.4%;
     color: white;
     background: red;
   }
