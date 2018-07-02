@@ -32,15 +32,20 @@ export default {
   data() {
     return {
       num: 1,
-      surplus: this.comSurplus,
-      name: this.comName.name,
-      price: this.comName.price
+      surplus: this.comName.surplus ? this.comName.surplus : "",
+      name: this.comName.name ? this.comName.name : "",
+      price: this.comName.price ? this.comName.price : ""
     };
   },
   props: ["comSurplus", "comName"],
   watch: {
-    comName(newValue, oldValue) {
-      this.name = newValue.name;
+    comName: {
+      handler(newName, oldName) {
+        this.name = newName.name;
+        this.price = newName.price;
+        this.surplus = newName.surplus;
+      },
+      deep: true
     }
   },
   methods: {

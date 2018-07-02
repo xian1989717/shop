@@ -14,7 +14,7 @@
     <div v-show="buyStatus" class="shade"></div>
     <!-- 购买操作栏 -->
     <div v-show="buyStatus" class="buy-style">
-      <cartBar :com-name="listName" :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
+      <cartBar :com-name="listName" @buy-Stauts="close"></cartBar>
     </div>
   </div>
 </template>
@@ -42,25 +42,32 @@ export default {
           img: require("../assets/01.png"),
           name: "鹿听茶",
           groupPrice: 20.0,
-          signPrice: 23.0
+          signPrice: 23.0,
+          surplus: 78
         },
         {
           id: 1,
           img: require("../assets/01.png"),
           name: "鹿听茶",
           groupPrice: 20.0,
-          signPrice: 23.0
+          signPrice: 23.0,
+          surplus: 20
         },
         {
           id: 2,
           img: require("../assets/01.png"),
           name: "鹿听茶",
           groupPrice: 20.0,
-          signPrice: 23.0
+          signPrice: 23.0,
+          surplus: 87
         }
       ],
       buyStatus: false,
-      listName: ""
+      listName: {
+        name: "",
+        price: "",
+        surplus: ""
+      }
     };
   },
   methods: {
@@ -72,13 +79,11 @@ export default {
         }
       });
     },
-    // buyNow(id) {
-    //   this.listName = this.list[id].name;
-    //   this.buyStatus = true;
-    // },
     show(data) {
       this.buyStatus = data.status;
-      this.listName = this.list[data.id].name;
+      this.listName.name = this.list[data.id].name;
+      this.listName.price = this.list[data.id].signPrice;
+      this.listName.surplus = this.list[data.id].surplus;
     },
     close(data) {
       this.buyStatus = data;
@@ -139,6 +144,39 @@ export default {
       bottom: 5px;
       right: 5px;
     }
+  }
+}
+.buy-style {
+  height: 130px;
+  position: fixed;
+  bottom: 30px;
+  width: 100%;
+  z-index: 100;
+  background: white;
+  i {
+    border: 1px solid black;
+    border-radius: 25px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    height: 12px;
+    font-size: 6px;
+  }
+  .left {
+    width: 60%;
+    height: 60px;
+    text-align: left;
+  }
+  .right {
+    position: absolute;
+    top: 25px;
+    right: 5px;
+  }
+  p {
+    background: red;
+    line-height: 30px;
+    height: 30px;
+    color: white;
   }
 }
 </style>

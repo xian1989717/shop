@@ -5,7 +5,7 @@
     <div v-show="buyStatus" class="shade"></div>
     <!-- 购买操作栏 -->
     <div v-show="buyStatus" class="buy-style">
-      <cartBar :com-name="listName" :com-surplus="data.surplus" @buy-Stauts="close"></cartBar>
+      <cartBar :com-name="listName" @buy-Stauts="close"></cartBar>
     </div>
   </div>
 </template>
@@ -19,32 +19,36 @@ export default {
     return {
       list: [
         {
+          id: 0,
+          img: require("../assets/01.png"),
+          name: "鹿听茶",
+          groupPrice: 20.0,
+          signPrice: 23.0,
+          surplus: 100
+        },
+        {
           id: 1,
           img: require("../assets/01.png"),
           name: "鹿听茶",
           groupPrice: 20.0,
-          signPrice: 23.0
+          signPrice: 23.0,
+          surplus: 200
         },
         {
           id: 2,
           img: require("../assets/01.png"),
           name: "鹿听茶",
           groupPrice: 20.0,
-          signPrice: 23.0
-        },
-        {
-          id: 3,
-          img: require("../assets/01.png"),
-          name: "鹿听茶",
-          groupPrice: 20.0,
-          signPrice: 23.0
+          signPrice: 23.0,
+          surplus: 300
         }
       ],
-      data: {
-        surplus: 996
-      },
       buyStatus: false,
-      listName: ""
+      listName: {
+        name: "",
+        price: "",
+        surplus: ""
+      }
     };
   },
   components: {
@@ -54,7 +58,9 @@ export default {
   methods: {
     show(data) {
       this.buyStatus = data;
-      this.listName = this.list[data.id].name;
+      this.listName.name = this.list[data.id].name;
+      this.listName.price = this.list[data.id].signPrice;
+      this.listName.surplus = this.list[data.id].surplus;
     },
     close(data) {
       this.buyStatus = data;

@@ -8,7 +8,7 @@
         <div class='list_div_right'>
           <div>{{item.name}}</div>
           <p>
-            <span class="price">￥{{item.groupPrice|formatMoney}}</span>
+            <span class="price">￥{{item.signPrice|formatMoney}}</span>
             <img class="fr" @click.stop="buyNow(item.id)" src="../../assets/cart_title.png">
           </p>
         </div>
