@@ -18,9 +18,9 @@
         <div>剩余:{{surplus}}</div>
       </div>
       <div class="right">
-        <button>-</button>
+        <button @click="sub">-</button>
         <span>{{num}}</span>
-        <button>+</button>
+        <button @click="add">+</button>
       </div>
     </div>
     <p>下一步</p>
@@ -31,7 +31,7 @@
 export default {
   data() {
     return {
-      num: 1,
+      newNum: 1,
       surplus: this.comName.surplus ? this.comName.surplus : "",
       name: this.comName.name ? this.comName.name : "",
       price: this.comName.price ? this.comName.price : ""
@@ -48,9 +48,26 @@ export default {
       deep: true
     }
   },
+  computed: {
+    num: function() {
+      return this.newNum;
+    }
+  },
   methods: {
     close() {
       this.$emit("buy-Stauts", false);
+    },
+    add() {
+      if (this.newNum === this.surplus) {
+        return;
+      }
+      this.newNum = this.newNum + 1;
+    },
+    sub() {
+      if (this.newNum === 1) {
+        return;
+      }
+      this.newNum = this.newNum - 1;
     }
   }
 };
