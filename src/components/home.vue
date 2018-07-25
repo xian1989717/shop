@@ -5,7 +5,7 @@
       <mt-swipe-item><img src="../assets/swipe_02.jpg" alt="" style="width:100%;"></mt-swipe-item>
       <mt-swipe-item><img src="../assets/swipe_03.jpg" alt="" style="width:100%;"></mt-swipe-item>
     </mt-swipe>
-    <mt-search class='myHeight' v-model='value' cancel-text='取消' placeholder='搜索'></mt-search>
+    <mt-search class='myHeight' v-model='value' cancel-text='取消' :result="filterResult"></mt-search>
     <main>
       <myList com-from="home" :com-list="list" @buy-now="show"></myList>
       <div style="height:55px;"></div>
@@ -28,40 +28,13 @@ Vue.component(Button.name, Button);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 import cartBar from "./public/cartBar.vue";
-
+import api from "../api/api";
 export default {
   data() {
     return {
       value: "",
-      data: {
-        surplus: 955
-      },
-      list: [
-        {
-          id: 0,
-          img: require("../assets/01.png"),
-          name: "鹿听茶",
-          groupPrice: 20.0,
-          signPrice: 23.0,
-          surplus: 78
-        },
-        {
-          id: 1,
-          img: require("../assets/01.png"),
-          name: "鹿听茶",
-          groupPrice: 20.0,
-          signPrice: 23.0,
-          surplus: 20
-        },
-        {
-          id: 2,
-          img: require("../assets/01.png"),
-          name: "鹿听茶",
-          groupPrice: 20.0,
-          signPrice: 23.0,
-          surplus: 87
-        }
-      ],
+      result: [],
+      list: [],
       buyStatus: false,
       listName: {
         name: "",
@@ -69,6 +42,23 @@ export default {
         surplus: ""
       }
     };
+  },
+  created() {
+    api.appIndex().then(data => {
+      console.log(data.data.data);
+      this.list = data.data.data;
+    });
+  },
+  computed: {
+    filterResult() {
+      if (this.value !== "") {
+        api.fluzzySearch(this.value).then(res => {
+          if (res.data.code === 1) {
+            console.log(res.data.data);
+          }
+        });
+      }
+    }
   },
   methods: {
     toDetails(id) {
@@ -80,10 +70,12 @@ export default {
       });
     },
     show(data) {
+      data.id -= 1;
       this.buyStatus = data.status;
       this.listName.name = this.list[data.id].name;
-      this.listName.price = this.list[data.id].signPrice;
+      this.listName.price = this.list[data.id].price;
       this.listName.surplus = this.list[data.id].surplus;
+      this.listName.buyBackPrice = this.list[data.id].buyBackPrice;
     },
     close(data) {
       this.buyStatus = data;

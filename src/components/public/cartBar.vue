@@ -8,7 +8,10 @@
           <img src="../../assets/close.png" alt="">
         </span>
       </p>
-      <p>￥{{price|formatMoney}}</p>
+      <p>
+        <span>价格:</span>
+        <span>￥{{price|formatMoney}}</span>
+      </p>
     </div>
     <div class="content">
       <div class="left">

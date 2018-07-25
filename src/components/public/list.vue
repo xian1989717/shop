@@ -3,12 +3,15 @@
     <ul class='myUl'>
       <li class='first_li' v-for='item in list' :key=item.id @click='toDetails(item.id)'>
         <div class='list_div_left fl'>
-          <img :src='item.img'>
+          <img :src='item.minImg'>
         </div>
         <div class='list_div_right'>
           <div>{{item.name}}</div>
           <p>
-            <span class="price">￥{{item.signPrice|formatMoney}}</span>
+            <span>价格:</span>
+            <span class="price">￥{{item.price|formatMoney}}</span><br/>
+            <span>回购价:</span>
+            <span class="price">￥{{item.buyBackPrice|formatMoney}}</span>
             <img class="fr" @click.stop="buyNow(item.id)" src="../../assets/cart_title.png">
           </p>
         </div>
@@ -21,11 +24,19 @@
 export default {
   data() {
     return {
-      list: this.comList,
+      list: [],
       from: this.comFrom
     };
   },
   props: ["comList", "comFrom"],
+  watch: {
+    comList: {
+      handler(newName, oldName) {
+        this.list = newName;
+      },
+      deep: true
+    }
+  },
   methods: {
     toDetails(id) {
       this.$router.push({

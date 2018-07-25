@@ -13,36 +13,11 @@
 <script>
 import myList from "./public/list.vue";
 import cartBar from "./public/cartBar.vue";
-
+import api from "../api/api";
 export default {
   data() {
     return {
-      list: [
-        {
-          id: 0,
-          img: require("../assets/01.png"),
-          name: "鹿听茶",
-          groupPrice: 20.0,
-          signPrice: 23.0,
-          surplus: 100
-        },
-        {
-          id: 1,
-          img: require("../assets/01.png"),
-          name: "鹿听茶",
-          groupPrice: 20.0,
-          signPrice: 23.0,
-          surplus: 200
-        },
-        {
-          id: 2,
-          img: require("../assets/01.png"),
-          name: "鹿听茶",
-          groupPrice: 20.0,
-          signPrice: 23.0,
-          surplus: 300
-        }
-      ],
+      list: [],
       buyStatus: false,
       listName: {
         name: "",
@@ -54,6 +29,13 @@ export default {
   components: {
     myList,
     cartBar
+  },
+  created() {
+    //获取商品列表
+    api.getCommClassify(this.$route.query.comId).then(res => {
+      console.log(res.data.data);
+      this.list = res.data.data;
+    });
   },
   methods: {
     show(data) {
