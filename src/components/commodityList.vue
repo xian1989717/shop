@@ -32,7 +32,7 @@ export default {
   },
   created() {
     //获取商品列表
-    api.getCommClassify(this.$route.query.comId).then(res => {
+    api.getCommClassifyThree(this.$route.query.comId).then(res => {
       console.log(res.data.data);
       this.list = res.data.data;
     });

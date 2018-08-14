@@ -3,21 +3,21 @@
     <p v-show="editStatus" @click="changeEditStatus">编辑</p>
     <p v-show="!editStatus" @click="changeEditStatus">完成</p>
     <ul>
-      <li v-for="item in list" :key="item.id">
-        <img v-show="item.status" @click="item.status =!item.status" class="change" src="../assets/yes.png" alt="">
-        <img v-show="!item.status" @click="item.status = !item.status" class="change" src="../assets/no.png" alt="">
-        <img :src="item.img">
-        <p>{{item.name}}</p>
+      <li v-for="(item,index) in list" :key="item.id">
+        <img v-show="item.status" @click="changeStats(item.status,index)" class="change" src="../assets/yes.png">
+        <img v-show="!item.status" @click="changeStats(item.status,index)" class="change" src="../assets/no.png">
+        <img :src="baseUrl+item.commodityPic">
+        <p>{{item.commodityName+" "+item.ruleVal}}</p>
         <div class="priceWrap" v-show="editStatus">
-          <span>￥{{item.groupPrice | formatMoney}}</span>
-          <span>X{{item.num}}</span>
+          <span>￥{{item.commodityPrice | formatMoney}}</span>
+          <span>X{{item.count}}</span>
         </div>
         <div class="fl" style="margin-top:60px;" v-show="!editStatus">
           <button @click="subtract(item.id)">-</button>
-          <span>{{item.num}}</span>
+          <span>{{item.count}}</span>
           <button @click="add(item.id)">+</button>
         </div>
-        <div class="fr delete" v-show="!editStatus" @click="deleteCom(item.id)">删除</div>
+        <div class="fr delete" v-show="!editStatus" @click="deleteCom(item.commodityId)">删除</div>
       </li>
     </ul>
     <div class="footer">
@@ -30,40 +30,23 @@
 
 <script>
 import { MessageBox } from "mint-ui";
+import api from "../api/api";
+import vue from "vue";
 export default {
   data() {
     return {
-      list: [
-        {
-          id: 1,
-          img: require("../assets/01.png"),
-          name: "鹿听茶",
-          groupPrice: 20.0,
-          signPrice: 23.0,
-          num: 5,
-          status: true
-        },
-        {
-          id: 2,
-          img: require("../assets/01.png"),
-          name: "鹿听茶",
-          groupPrice: 20.0,
-          signPrice: 23.0,
-          num: 5,
-          status: true
-        },
-        {
-          id: 3,
-          img: require("../assets/01.png"),
-          name: "鹿听茶",
-          groupPrice: 20.0,
-          signPrice: 23.0,
-          num: 5,
-          status: true
-        }
-      ],
+      list: [],
       editStatus: true
     };
+  },
+  created() {
+    api.selectCart("322").then(res => {
+      this.list = res.data.appCartItem;
+      this.list.forEach(function(data) {
+        vue.set(data, "status", true);
+      });
+      console.log(this.list);
+    });
   },
   methods: {
     /**
@@ -71,7 +54,6 @@ export default {
      */
     allSelect() {
       this.list.forEach((val, index) => {
-        console.log(val);
         val.status = !val.status;
       });
     },
@@ -83,8 +65,8 @@ export default {
       MessageBox.confirm("确定执行此操作?").then(res => {
         if (res) {
           this.list.forEach((v, i) => {
-            if (v.id === id) {
-              this.list.splice(i, 1);
+            if (v.commodityId === id) {
+              api.deleteCart(id, 20);
             }
           });
         }
@@ -99,18 +81,21 @@ export default {
     add(id) {
       for (let i = 0; i < this.list.length; i++) {
         if (this.list[i].id === id) {
-          this.list[i].num += 1;
+          this.list[i].count += 1;
         }
       }
     },
     subtract(id) {
       for (let i = 0; i < this.list.length; i++) {
         if (this.list[i].id === id) {
-          if (this.list[i].num > 1) {
-            this.list[i].num = this.list[i].num - 1;
+          if (this.list[i].count > 1) {
+            this.list[i].count = this.list[i].count - 1;
           }
         }
       }
+    },
+    changeStats(stats, index) {
+      this.list[index].status = !stats;
     }
   },
   computed: {
@@ -125,7 +110,7 @@ export default {
         }),
         totalPrice = 0;
       for (var i = 0, len = _proList.length; i < len; i++) {
-        totalPrice += _proList[i].num * _proList[i].groupPrice;
+        totalPrice += _proList[i].count * _proList[i].commodityPrice;
       }
       return { totalNum: _proList.length, totalPrice: totalPrice };
     }

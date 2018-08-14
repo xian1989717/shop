@@ -26,18 +26,20 @@
         <button @click="add">+</button>
       </div>
     </div>
-    <p>下一步</p>
+    <p @click="addCart">下一步</p>
   </div>
 </template>
 
 <script>
+import api from "../../api/api";
 export default {
   data() {
     return {
       newNum: 1,
       surplus: this.comName.surplus ? this.comName.surplus : "",
       name: this.comName.name ? this.comName.name : "",
-      price: this.comName.price ? this.comName.price : ""
+      price: this.comName.price ? this.comName.price : "",
+      commodityId: this.comName.id ? this.comName.id : ""
     };
   },
   props: ["comSurplus", "comName"],
@@ -47,6 +49,7 @@ export default {
         this.name = newName.name;
         this.price = newName.price;
         this.surplus = newName.surplus;
+        this.commodityId = newName.id;
       },
       deep: true
     }
@@ -58,6 +61,7 @@ export default {
   },
   methods: {
     close() {
+      this.newNum = 1;
       this.$emit("buy-Stauts", false);
     },
     add() {
@@ -71,6 +75,22 @@ export default {
         return;
       }
       this.newNum = this.newNum - 1;
+    },
+    addCart() {
+      var data = {
+        commodityId: this.commodityId,
+        count: this.newNum,
+        userId: ""
+      };
+      api.addCartItem(data).then(res => {
+        if (
+          res.data.code === "1" &&
+          (res.data.msg === "添加购物车成功" || res.data.msg === "更新成功")
+        ) {
+          alert("添加购物车成功");
+          this.close();
+        }
+      });
     }
   }
 };

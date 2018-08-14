@@ -1,7 +1,7 @@
 <template>
   <div>
     <mt-header class="nav" fixed title="商品详情">
-      <router-link v-show="from ==='commodityList'" to="commodityList" slot="left">
+      <router-link v-show="from ==='commodityList'" to="/CommodityList" slot="left">
         <mt-button icon="back">返回</mt-button>
       </router-link>
       <router-link v-show="from ==='home'" to="/" slot="left">
@@ -18,15 +18,15 @@
       <p>{{data.name}} {{data.ruleVal}}</p>
       <p class="color">
         <span>价格:</span>
-        <span>￥{{data.price |formatMoney}}</span>
+        <span>￥{{data.price | formatMoney}}</span>
       </p>
       <p class="transverse-line">
         <span>回购价:</span>
-        <span>￥{{data.buyBackPrice |formatMoney}}</span>
+        <span>￥{{data.buyBackPrice | formatMoney}}</span>
       </p>
       <div class="transverse-line">
-        <span class="fl">运费：{{data.transportation}}</span>
-        <span class="ml5">剩余：{{data.inventory}}</span>
+        <span class="fl">运费：{{data.freight | formatMoney}}</span>
+        <span class="ml5" style="margin-left:50px;">剩余：{{data.inventory}}</span>
         <span class="fr">销量：{{data.sales}}</span>
       </div>
       <div class="">
@@ -68,7 +68,8 @@ export default {
       num: 1,
       buyStatus: false,
       graphicDetailsStatus: true,
-      from: ""
+      from: "",
+      id: ""
     };
   },
   events: {

@@ -1,9 +1,9 @@
 <template>
   <div>
     <ul class='myUl'>
-      <li class='first_li' v-for='item in list' :key=item.id @click='toDetails(item.id)'>
+      <li class='first_li' v-for='(item,index) in list' :key=item.id @click='toDetails(item.id)'>
         <div class='list_div_left fl'>
-          <img :src='item.minImg'>
+          <img :src='baseUrl+item.minImg'>
         </div>
         <div class='list_div_right'>
           <div>{{item.name}}</div>
@@ -12,7 +12,7 @@
             <span class="price">￥{{item.price|formatMoney}}</span><br/>
             <span>回购价:</span>
             <span class="price">￥{{item.buyBackPrice|formatMoney}}</span>
-            <img class="fr" @click.stop="buyNow(item.id)" src="../../assets/cart_title.png">
+            <img class="fr" @click.stop="buyNow(index,item.id)" src="../../assets/cart_title.png">
           </p>
         </div>
       </li>
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       list: [],
-      from: this.comFrom
+      from: this.comFrom,
     };
   },
   props: ["comList", "comFrom"],
@@ -47,8 +47,8 @@ export default {
         }
       });
     },
-    buyNow(id) {
-      this.$emit("buy-now", { status: true, id: id });
+    buyNow(index, id) {
+      this.$emit("buy-now", { status: true, index: index, id: id });
     }
   }
 };
@@ -83,6 +83,9 @@ export default {
     }
     .list_div_left {
       height: 106px;
+      img {
+        width: 125px;
+      }
     }
     .buttonWrap {
       position: absolute;

@@ -1,12 +1,18 @@
 <template>
   <div style="background:#CAE1FF">
-    <mt-swipe :auto="4000" style="height:200px;">
+    <mt-swipe v-show="isSearch" :auto="4000" style="height:200px;">
       <mt-swipe-item><img src="../assets/swipe_01.jpg" alt="" style="width:100%;"></mt-swipe-item>
       <mt-swipe-item><img src="../assets/swipe_02.jpg" alt="" style="width:100%;"></mt-swipe-item>
       <mt-swipe-item><img src="../assets/swipe_03.jpg" alt="" style="width:100%;"></mt-swipe-item>
     </mt-swipe>
-    <mt-search class='myHeight' v-model='value' cancel-text='取消' :result="filterResult"></mt-search>
-    <main>
+    <div style="width:97%;line-height:23px;border:5px solid #ccc;background:white;">
+      <input type="text" v-model="value" :result="filterResult" style="width:80%;border:none;height:25px;outline: none;">
+      <span style="border-left:3px solid #ccc;height:27px;line-height:25px;padding-left:12px;display:inline-block;font-size:14px;" @click="cancel">取消</span>
+    </div>
+    <ul style="background：white;">
+      <li style="margin:3px;" v-for="item in result" :key="item.id" @click="toDetails(item.id)">{{item.name}}</li>
+    </ul>
+    <main v-show="isSearch">
       <myList com-from="home" :com-list="list" @buy-now="show"></myList>
       <div style="height:55px;"></div>
     </main>
@@ -22,11 +28,12 @@
 <script>
 import Vue from "vue";
 import myList from "./public/list.vue";
-import { Swipe, SwipeItem, Search, Button } from "mint-ui";
+import { Swipe, SwipeItem, Search, Button, Cell } from "mint-ui";
 Vue.component(Search.name, Search);
 Vue.component(Button.name, Button);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
+Vue.component(Cell.name, Cell);
 import cartBar from "./public/cartBar.vue";
 import api from "../api/api";
 export default {
@@ -39,8 +46,10 @@ export default {
       listName: {
         name: "",
         price: "",
-        surplus: ""
-      }
+        surplus: "",
+        id: ""
+      },
+      isSearch: true
     };
   },
   created() {
@@ -52,11 +61,16 @@ export default {
   computed: {
     filterResult() {
       if (this.value !== "") {
+        this.isSearch = false;
         api.fluzzySearch(this.value).then(res => {
           if (res.data.code === 1) {
             console.log(res.data.data);
+            this.result = res.data.data;
           }
         });
+      } else {
+        this.result = [];
+        this.isSearch = true;
       }
     }
   },
@@ -65,20 +79,27 @@ export default {
       this.$router.push({
         path: "/details",
         query: {
-          comId: id
+          comId: id,
+          from: "home"
         }
       });
     },
     show(data) {
-      data.id -= 1;
       this.buyStatus = data.status;
-      this.listName.name = this.list[data.id].name;
-      this.listName.price = this.list[data.id].price;
-      this.listName.surplus = this.list[data.id].surplus;
-      this.listName.buyBackPrice = this.list[data.id].buyBackPrice;
+      this.listName.name = this.list[data.index].name;
+      this.listName.price = this.list[data.index].price;
+      this.listName.surplus = this.list[data.index].surplus;
+      this.listName.buyBackPrice = this.list[data.index].buyBackPrice;
+      this.listName.id = this.list[data.index].id;
     },
     close(data) {
       this.buyStatus = data;
+    },
+    //取消搜索状态
+    cancel() {
+      this.isSearch = true;
+      this.result = [];
+      this.value = "";
     }
   },
   components: {

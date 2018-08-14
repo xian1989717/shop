@@ -6,6 +6,7 @@ import router from './router';
 import './lib/filter/index.js'
 
 Vue.config.productionTip = false;
+Vue.prototype.baseUrl = "http://154.8.158.55:8001/";
 
 /* eslint-disable no-new */
 new Vue({
