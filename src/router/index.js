@@ -8,6 +8,7 @@ import Details from '@/components/details';
 import Classify from '@/components/classify';
 import CommodityList from '@/components/commodityList';
 import OrderList from '@/components/OrderList';
+import orderForPayment from '@/components/orderForPayment';
 Vue.use(Router);
 
 export default new Router({
@@ -57,6 +58,11 @@ export default new Router({
       path: '/orderList',
       name: 'OrderList',
       component: OrderList
+    },
+    {
+      path: '/orderForPayment',
+      name: 'orderForPayment',
+      component: orderForPayment
     }
   ]
 });

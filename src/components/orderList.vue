@@ -42,6 +42,10 @@ export default {
     return {
       headerList: [
         {
+          id: 0,
+          name: "全部订单"
+        },
+        {
           id: 1,
           name: "代付款"
         },
@@ -61,6 +65,9 @@ export default {
       dom: 0
     };
   },
+  created(){
+    
+  },
   methods: {
     changeList(id, index) {
       this.dom = index;
@@ -74,7 +81,7 @@ export default {
   text-align: center;
   line-height: 40px;
   span {
-    width: 25%;
+    width: 20%;
     display: inline-block;
   }
 }

@@ -52,5 +52,18 @@ export default {
       method: 'post',
       url: '/cart/cartitem/deleteBatch?cartitemId=' + ids + ',&userId=322'
     });
-  }
+  },
+  //购物车批量更新
+  payment(params) {
+    return service({
+      method: 'post',
+      url: '/cart/cartitem/updateBatch',
+      data: params
+    });
+  },
+  //查询所有订单
+  getAllOrderList(params) {
+    return service.get('/orderInfo/buyer/list?orderStatus=' + params.state + '&pageNum=' + params.pageNum + '&pageSize=' + params.pageSize);
+  },
+
 }

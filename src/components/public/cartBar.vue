@@ -80,7 +80,7 @@ export default {
       var data = {
         commodityId: this.commodityId,
         count: this.newNum,
-        userId: ""
+        userId: "fz"
       };
       api.addCartItem(data).then(res => {
         if (
