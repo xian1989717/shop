@@ -25,18 +25,22 @@
     <!-- 其它信息 -->
     <div>
       <p>
-        <span>配送方式</span>
-        <span>商家配送</span>
+                                      <span>配送方式</span>
+                                      <span>商家配送</span>
       </p>
       <p>
         <span>合计</span>
         <span>{{totalPrice}}</span>
       </p>
     </div>
+    <div @click="payment" class="foot">
+      <p><span>付款</span></p>
+    </div>
   </div>
 </template>
 
 <script>
+import api from "../api/api";
 export default {
   data() {
     return {
@@ -49,6 +53,19 @@ export default {
     this.list.forEach((v, i) => {
       this.totalPrice += v.commodityPrice;
     });
+  },
+  methods: {
+    payment() {
+      let data = {
+        name: "张三",
+        phone: 18092564370,
+        address: "石家庄，第三大道",
+        list: this.list
+      };
+      api.paymentAdd(data).then(data => {
+        console.log(data);
+      });
+    }
   }
 };
 </script>
@@ -59,6 +76,19 @@ export default {
   span:nth-child(2) {
     float: right;
     margin-right: 10px;
+  }
+}
+.foot {
+  position: fixed;
+  bottom: 0px;
+  background: #ccc;
+  width: 100%;
+  > p {
+    line-height: 30px;
+    text-align: right;
+    > span {
+      margin-right: 10px;
+    }
   }
 }
 </style>

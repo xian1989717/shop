@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script>
+<script> 
 import api from "../api/api";
 export default {
   data() {

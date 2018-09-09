@@ -65,5 +65,13 @@ export default {
   getAllOrderList(params) {
     return service.get('/orderInfo/buyer/list?orderStatus=' + params.state + '&pageNum=' + params.pageNum + '&pageSize=' + params.pageSize);
   },
-
+  //订单新增
+  paymentAdd(params) {
+    return service.post('/orderInfo/buyer/add', {
+      "buyerName": params.name,      //买家名字
+      "buyerPhone": params.phone, //买家电话
+      "buyerAddress": params.address,   //买家地址
+      "orderDetailList": params.list
+    })
+  }
 }
